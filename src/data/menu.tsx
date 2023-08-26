@@ -1,6 +1,7 @@
 import { MenuProps } from "antd/es/menu";
 import { AppstoreOutlined, MailOutlined, SettingOutlined, PieChartOutlined, DesktopOutlined, ContainerOutlined } from '@ant-design/icons';
-
+import {Service} from '@/services'
+const {apiEndpoints, primaryRoutes} = Service
 export const HEADER_MENU: MenuProps['items'] = [
     {
       label: 'Navigation One',
@@ -77,9 +78,9 @@ function getItem(
 }
 
 export const SIDER_MENU : MenuProps['items'] = [
-  getItem('Product', '/admin/product', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('Option 3', '3', <ContainerOutlined />),
+  getItem('Dịch vụ', primaryRoutes.admin + apiEndpoints.dichvus, <PieChartOutlined />),
+  getItem('Loại dịch vụ', primaryRoutes.admin + apiEndpoints.loaidichvus, <DesktopOutlined />),
+  getItem('Kênh tin', primaryRoutes.admin + apiEndpoints.kenhtins, <ContainerOutlined />),
 
   getItem('Navigation One', 'sub1', <MailOutlined />, [
     getItem('Option 5', '5'),

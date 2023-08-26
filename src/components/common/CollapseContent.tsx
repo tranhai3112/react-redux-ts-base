@@ -14,12 +14,12 @@ export const CollapseContent = ({ children, modalItem, extraButtons, defaultVisi
   const [open, setOpen] = useState(defaultVisible)
   return (
     <div>
-      <Row className='d-flex justify-content-center' justify="end">
+      <Row className='d-flex justify-content-center' justify="end" gutter={[16,16]}>
         <Col>
           <AntdButton onClick={() => setOpen(curr => !curr)}>Tìm kiếm</AntdButton>
         </Col>
-        {extraButtons?.length ? extraButtons.map(button => {
-          return <Col>
+        {extraButtons?.length ? extraButtons.map((button, index) => {
+          return <Col key={index}>
           {button}
         </Col>
         }): null}
@@ -28,7 +28,7 @@ export const CollapseContent = ({ children, modalItem, extraButtons, defaultVisi
       <div className={`collapse-content-wrapper ${open ? `opened` : ``}`}>
         {children}
       </div>
-      <AntdModal footer={null}>
+      <AntdModal footer={null} width={1000}>
         {modalItem}
       </AntdModal>
     </div>

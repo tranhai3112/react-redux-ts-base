@@ -1,4 +1,4 @@
-import { IBaseExt} from "../../../models/base";
+import { IBaseExt} from "../../../models/basemodel";
 export interface IUser extends IBaseExt{
     name: string,
     age: number

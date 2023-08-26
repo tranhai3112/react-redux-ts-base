@@ -11,7 +11,7 @@ export const Login = () => {
     }
   return (
     <div>
-        <Form form={form} name='login' onFinish={onFinish} initialValues={{email: "john@mail.com", password: "changeme"}}>
+        <Form form={form} name='login' onFinish={onFinish} initialValues={{email: "", password: ""}}>
             <Form.Item name="email" label={"email"}>
                 <Input></Input>
             </Form.Item>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Layout, Menu, theme, Button } from 'antd'
 import { HEADER_MENU, SIDER_MENU, SIDER_MENU_WIDTH } from '../../../../data'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AntdBreadCrumb } from '../breadcrumb/BreadCrumb'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { MenuProps } from "antd/es/menu"
@@ -20,6 +20,7 @@ export const AntdLayout = ({children, headerFixed = true, siderFixed = true, sid
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const siderRef = useRef<HTMLDivElement>(null)
+  const location = useLocation()
   const [siderWidth, setSiderWidth] = useState<string | undefined>(siderWrapperWidth)
   const {
     token: { colorBgContainer },
@@ -42,7 +43,7 @@ export const AntdLayout = ({children, headerFixed = true, siderFixed = true, sid
         <Menu
           mode="inline"
           theme={menuTheme}
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[location.pathname]}
           style={{ height: '100%', borderRight: 0 }}
           onClick={(e) => navigate(e.key)}
           items={SIDER_MENU}

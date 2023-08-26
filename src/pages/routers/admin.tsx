@@ -2,25 +2,32 @@ import { Navigate, RouteObject, createBrowserRouter } from 'react-router-dom'
 import { Login, RequiredAuth } from '../../features/auth/components'
 import React, { Suspense } from 'react'
 import { MasterLayout } from '../../components/layout'
-const ProductLazy = React.lazy(() => import('../../features/product/components/ProductTable'))
+import { Service } from '@/services'
+const DichVuLazy = React.lazy(() => import('../../features/dichvu/components/DichVuTable'))
+const LoaiDichVuLazy = React.lazy(() => import('../../features/loaidichvu/components/LoaiDichVuTable'))
+const KenhTinLazy = React.lazy(() => import('../../features/kenhtin/components/KenhTinWrapper'))
+const {apiEndpoints, primaryRoutes} = Service
 export const adminRouters: RouteObject[] = [
     {
-        path: "/admin",
+        path: primaryRoutes.admin,
         element:
+        <Suspense fallback={<div>loading</div>}>
             <RequiredAuth>
                 <MasterLayout />
-            </RequiredAuth>,
+            </RequiredAuth>
+        </Suspense>,
         children: [
             {
-                path: '/admin/product',
-                element: <Suspense fallback={<div>loading</div>}>
-                    <ProductLazy />
-                </Suspense>,
-                //https://reactrouter.com/en/main/route/loader
-                loader: async () => {// new stubs
-                    console.log("???"); 
-                    return null;
-                }
+                path: primaryRoutes.admin + apiEndpoints.dichvus,
+                element: <DichVuLazy />
+            },
+            {
+                path: primaryRoutes.admin + apiEndpoints.loaidichvus,
+                element: <LoaiDichVuLazy />
+            },
+            {
+                path: primaryRoutes.admin + apiEndpoints.kenhtins,
+                element: <KenhTinLazy/>
             }
         ]
     },
