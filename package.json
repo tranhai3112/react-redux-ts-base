@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.7.0",
     "axios": "^1.4.0",
+    "bootstrap": "5.3.1",
     "formiojs": "^4.16.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
