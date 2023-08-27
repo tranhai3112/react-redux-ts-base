@@ -4,7 +4,6 @@ import { ColumnsType } from 'antd/es/table'
 import { Popconfirm, Space } from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { useAppDispatch } from '../../../lib/redux/Hooks'
-import { showModal } from '../../../lib/redux/modal/Slice'
 import { DeleteTinBai } from '../redux/action'
 import { IBasePagination } from '../../../models'
 import dayjs from 'dayjs'
@@ -54,7 +53,7 @@ export const useColumn = (pagination: IBasePagination) => {
                 key: '',
                 render: (_, record) => (
                     <Space direction="horizontal">
-                        <EditOutlined style={{color:"cornflowerblue"}} title="Xem chi tiết/Sửa" onClick={() => dispatch(showModal({ title: "Chi tiết tin bài", data: record }))} />
+                        <EditOutlined style={{color:"cornflowerblue"}} title="Xem chi tiết/Sửa" onClick={() => {}} />
                         <Popconfirm
                             title='Xoá?'
                             onConfirm={() => {
@@ -71,5 +70,5 @@ export const useColumn = (pagination: IBasePagination) => {
             }
         ]
     }, [pagination])
-    return {columns}
+    return columns
 }

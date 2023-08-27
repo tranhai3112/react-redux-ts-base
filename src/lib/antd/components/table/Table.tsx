@@ -12,6 +12,7 @@ export interface IAntdTableProps<IModel, ISearch> extends Omit<TableProps<IModel
 
 export const AntdTable = <IModel extends IBaseExt, ISearch extends IBasePagination>(props: IAntdTableProps<IModel, ISearch>) => {
   const { columns, dataSource, pagination, loading, onSearch, searchParams, setSearchParams, rowKey, ...rest } = props
+  // thiếu case k muốn search luôn 
   useEffect(() => {
     onSearch(searchParams)
   }, [searchParams])

@@ -4,10 +4,12 @@ export type GenericState<TObj, TKey extends keyof TObj> = {
     [Spec in TKey] ?: TObj[Spec]
     
 }
+//TObj, TKey truyền xuống GenericState
 export type ExtendedState<T, TObj = {}, TKey extends keyof TObj = never> = GenericState<TObj, TKey> & {
-    data?: T
-    datas? : T[]
-    loading: boolean
+    data?: T,
+    datas? : T[],
+    
+    loading: boolean,
     count?: number,
     error?: string,
 }

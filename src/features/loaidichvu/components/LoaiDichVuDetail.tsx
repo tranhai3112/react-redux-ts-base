@@ -2,9 +2,9 @@ import { Col, Form, Input, InputNumber, Row, SelectProps, Space } from "antd"
 import { useAppDispatch, useAppSelector } from "../../../lib/redux/Hooks"
 import { ILoaiDichVu, ISearchLoaiDichVu } from "../models"
 import { useEffect } from "react"
-import { AntdButton, AntdSelect, UpLoadAntd } from "../../../lib/antd/components"
-import { hideModal } from "../../../lib/redux/modal/Slice"
+import { AntdButton, AntdModal, AntdSelect, AntdUpLoad } from "../../../lib/antd/components"
 import { AddLoaiDichVu, GetLoaiDichVu, UpdateLoaiDichVu } from "../redux/action"
+import { useLoaiDichVuContext } from "../contexts/LoaiDichVuContext"
 
 const LINKTYPE_OPTIONS :SelectProps["options"] = [{
     label: "Trang hiện tại",
@@ -16,31 +16,29 @@ const LINKTYPE_OPTIONS :SelectProps["options"] = [{
 
 export const LoaiDichVuDetail = () => {
     const dispatch = useAppDispatch()
-    const { data: modalData } = useAppSelector(state => state.modal)
     const { data: loaiDichVus } = useAppSelector(state => state.loaidichvu)
+    const loaiDichVuContext = useLoaiDichVuContext()
     const [form] = Form.useForm<ILoaiDichVu>()
     const onFinish = async () => {
         const formData = form.getFieldsValue()
-        if (modalData?.id) {
-            dispatch(UpdateLoaiDichVu({ id: modalData.id, data: formData }))
+        if (loaiDichVuContext?.loaidichVuId) {
+            dispatch(UpdateLoaiDichVu({ id: loaiDichVuContext.loaidichVuId, data: formData }))
         } else {
             dispatch(AddLoaiDichVu(formData))
         }
         form.resetFields()
-        dispatch(hideModal())
     }
     const handleCancel = () => {
         form.resetFields();
-        dispatch(hideModal())
+        loaiDichVuContext.setLoaiDichVuId(undefined)
+        loaiDichVuContext.setLoaiDichVuModalVisible(false)
     };
     useEffect(() => {
-        if (modalData) {
-            dispatch(GetLoaiDichVu(modalData.id))
+        if (loaiDichVuContext.loaidichVuId) {
+            dispatch(GetLoaiDichVu(loaiDichVuContext.loaidichVuId))
         }
-        return () => {
-            form.resetFields()
-        }
-    }, [modalData])
+        
+    }, [loaiDichVuContext.loaidichVuId])
 
     useEffect(() => {
         if (loaiDichVus) {
@@ -49,6 +47,7 @@ export const LoaiDichVuDetail = () => {
     }, [loaiDichVus])
 
     return (
+        <AntdModal visible={loaiDichVuContext.loaiDichVuModalVisible} title="Thêm mới loại dịch vụ" handlerCancel={handleCancel}>
         <Form name='dichvu' layout="vertical" form={form}>
             <Row gutter={[8, 8]}>
                 <Col span={18}>
@@ -88,7 +87,7 @@ export const LoaiDichVuDetail = () => {
                         label="Ảnh"
                         name="imageUrl"
                     >
-                        <UpLoadAntd formInstance={form} folderName="LoaiDichVu" fieldName="imageUrl" accept="image/png, image/jpeg" listType="picture"/>
+                        <AntdUpLoad formInstance={form} folderName="LoaiDichVu" fieldName="imageUrl" accept="image/png, image/jpeg" listType="picture"/>
                     </Form.Item>
                 </Col>
             </Row>
@@ -103,5 +102,7 @@ export const LoaiDichVuDetail = () => {
                 </Space>
             </Form.Item>
         </Form>
+        </AntdModal>
+        
     )
 }

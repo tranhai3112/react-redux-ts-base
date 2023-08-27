@@ -2,13 +2,13 @@ import { Form, Input, Row, Space } from "antd"
 import { CollapseContent } from "../../../components/common/CollapseContent"
 import { AntdButton } from "../../../lib/antd/components"
 import { useAppDispatch } from "../../../lib/redux/Hooks"
-import { showModal } from "../../../lib/redux/modal/Slice"
 import { ISearchLoaiDichVu } from "../models"
 import { useCallback } from "react"
 import { LoaiDichVuDetail } from "./LoaiDichVuDetail"
+import { useLoaiDichVuContext } from "../contexts/LoaiDichVuContext"
 
 export const LoaiDichVuSearch = ({ setSearchParams }: { setSearchParams: React.Dispatch<React.SetStateAction<ISearchLoaiDichVu>> }) => {
-  const dispatch = useAppDispatch()
+  const loaiDichVuContext = useLoaiDichVuContext()
   const [form] = Form.useForm()
   const onFinish = (values: ISearchLoaiDichVu) => {
     console.log(values);
@@ -19,10 +19,9 @@ export const LoaiDichVuSearch = ({ setSearchParams }: { setSearchParams: React.D
   }, [])
   return (
     <CollapseContent
-      extraButtons={[<AntdButton onClick={() => dispatch(showModal({ title: "Thêm mới loại dịch vụ", data: null }))}>Thêm mới</AntdButton>]}
-      modalItem={<LoaiDichVuDetail />}
+      extraButtons={[<AntdButton onClick={() => loaiDichVuContext.setLoaiDichVuModalVisible(true)}>Thêm mới</AntdButton>]}
     >
-      <Form name='product' layout="vertical" onFinish={onFinish} form={form}>
+      <Form name='loaiDichVuSearch' layout="vertical" onFinish={onFinish} form={form}>
         <Form.Item
           label="Tên loại dịch vụ"
           name="tenLoaiDichVu"

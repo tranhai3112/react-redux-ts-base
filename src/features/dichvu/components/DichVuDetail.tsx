@@ -2,41 +2,38 @@ import { Col, Form, Input, InputNumber, Row, SelectProps, Space, Upload } from "
 import { useAppDispatch, useAppSelector } from "../../../lib/redux/Hooks"
 import { IDichVu } from "../models"
 import { useEffect, useMemo, useRef } from "react"
-import { AntdButton, AntdSelect, UpLoadAntd } from "../../../lib/antd/components"
-import { hideModal } from "../../../lib/redux/modal/Slice"
+import { AntdButton, AntdModal, AntdSelect, AntdUpLoad } from "../../../lib/antd/components"
 import { UploadOutlined } from "@ant-design/icons"
 import { SearchLoaiDichVu } from "../../loaidichvu/redux/action"
 import { AddDichVu, GetDichVu, UpdateDichVu } from "../redux/action"
+import { useDichVuContext } from "../contexts/DichVuContext"
 
 export const DichVuDetail = () => {
     const dispatch = useAppDispatch()
-    const { data: modalData } = useAppSelector(state => state.modal)
     const { data: dichVu, datas: dichVus } = useAppSelector(state => state.dichvu)
     const { datas: loaiDichVus, loading } = useAppSelector(state => state.loaidichvu)
+    const dichVuContext = useDichVuContext()
     const [form] = Form.useForm<IDichVu>()
 
     const onFinish = async () => {
         const formData = form.getFieldsValue()
-        if (modalData?.id) {
-            dispatch(UpdateDichVu({ id: modalData.id, data: { ...formData,} }))
+        if (dichVuContext?.dichVuId) {
+            dispatch(UpdateDichVu({ id: dichVuContext.dichVuId, data: { ...formData,} }))
         } else {
             dispatch(AddDichVu({ ...formData}))
         }
-        dispatch(hideModal())
         form.resetFields()
     }
     const handleCancel = () => {
         form.resetFields();
-        dispatch(hideModal())
+        dichVuContext.setDichVuModalVisible(false)
+        dichVuContext.setDichVuId(undefined)
     };
     useEffect(() => {
-        if (modalData) {
-            dispatch(GetDichVu(modalData.id))
+        if (dichVuContext.dichVuId) {
+            dispatch(GetDichVu(dichVuContext.dichVuId))
         }
-        return () => {
-            form.resetFields()
-        }
-    }, [modalData])
+    }, [dichVuContext.dichVuId])
 
     useEffect(() => {
         if (dichVu) {
@@ -51,7 +48,8 @@ export const DichVuDetail = () => {
     }, [])
 
     return (
-        <Form name='dichvu' layout="vertical" onFinish={onFinish} form={form} requiredMark={modalData === null} initialValues={{ thuTu: 1 }}>
+        <AntdModal title="Thêm mới dịch vụ" visible={dichVuContext.dichVuModalVisible} handlerCancel={handleCancel} footer={null}>
+        <Form name='dichvu' layout="vertical" onFinish={onFinish} form={form} requiredMark={dichVuContext.dichVuId === null} initialValues={{ thuTu: 1 }}>
             <Row gutter={[8, 8]}>
                 <Col md={12} span={24}>
                     <Form.Item
@@ -84,7 +82,7 @@ export const DichVuDetail = () => {
                         label="Ảnh đại diện"
                         name="imageUrl"
                     >
-                        <UpLoadAntd formInstance={form} folderName="DichVu" fieldName="imageUrl" accept="image/png, image/jpeg" listType="picture"/>
+                        <AntdUpLoad formInstance={form} folderName="DichVu" fieldName="imageUrl" accept="image/png, image/jpeg" listType="picture"/>
                     </Form.Item>
                 </Col>
                 <Col md={12} span={24}>
@@ -116,5 +114,6 @@ export const DichVuDetail = () => {
                 </Space>
             </Form.Item>
         </Form>
+        </AntdModal>
     )
 }

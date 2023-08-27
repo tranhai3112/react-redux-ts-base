@@ -4,8 +4,8 @@ import React,{ createContext, useContext, useState } from "react";
 const FolderContext = createContext<IFolderContext | null>(null)
 
 export interface IFolderContext{
-    folderId: string | null;
-    setFolderId: React.Dispatch<React.SetStateAction<string | null>> ;
+    folderId: string | undefined;
+    setFolderId: React.Dispatch<React.SetStateAction<string | undefined>> ;
 }
 
 export const useFolderContext = () => {
@@ -16,7 +16,7 @@ export const useFolderContext = () => {
 }
 
 export const FolderContextProvider = ({children}: IWithChildren) => {
-    const [folderId, setFolderId] = useState<string | null>(null)
+    const [folderId, setFolderId] = useState<string>()
     // thêm các hàm search cho các tabs ở đây
     return <FolderContext.Provider value={{folderId, setFolderId}}>
         {children}

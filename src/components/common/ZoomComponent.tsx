@@ -1,10 +1,15 @@
+import { AntdDivider, AntdSpace } from '@/lib/antd/components';
+import { IWithChildren } from '@/types';
+import { FullscreenExitOutlined, FullscreenOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Col, Row } from 'antd';
 import React, { useState } from 'react';
 
-export interface IZoomComponentProps {
-    children: (onTogglerZoom: () => void, zoomed: boolean) => React.ReactNode
+export interface IZoomComponentProps extends IWithChildren{
+    title?: React.ReactNode,
+    onRefresh: () => void
 }
 
-export const ZoomComponent = (({children} : IZoomComponentProps) => {
+export const ZoomComponent = (({children, title, onRefresh} : IZoomComponentProps) => {
     const [zoomed, setZoomed] = useState(false)
     const onTogglerZoom = () => {
         setZoomed((curr) => !curr)
@@ -12,7 +17,24 @@ export const ZoomComponent = (({children} : IZoomComponentProps) => {
     
   return (<div className={zoomed ? "zoom-in-component" : ""}>
         {/* render prop component pattern */}
-      {children(onTogglerZoom, zoomed)}
+      <>
+      <Row align="middle" justify="space-between">
+            <Col>
+              {title}
+            </Col>
+            <Col>
+              <AntdSpace>
+                <ReloadOutlined title="Tải lại" onClick={() => onRefresh()} style={{ fontSize: '18px' }} />
+                {zoomed ?
+                  <FullscreenExitOutlined title="Thoát toàn màn hình" style={{ fontSize: "18px" }} onClick={() => onTogglerZoom()} /> :
+                  <FullscreenOutlined title="Toàn màn hình" onClick={() => onTogglerZoom()} style={{ fontSize: '18px' }} />
+                }
+              </AntdSpace>
+            </Col>
+          </Row>
+        <AntdDivider />
+        {children}
+      </>
   </div>
   )
 })

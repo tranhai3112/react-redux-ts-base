@@ -6,11 +6,10 @@ import { AntdModal } from '../../lib/antd/components'
 
 export interface ICollapseContentProps extends IWithChildren{
   defaultVisible?: boolean,
-  modalItem?: React.ReactNode,
   extraButtons?: React.ReactNode[],
 }
 
-export const CollapseContent = ({ children, modalItem, extraButtons, defaultVisible}: ICollapseContentProps) => {
+export const CollapseContent = ({ children, extraButtons, defaultVisible}: ICollapseContentProps) => {
   const [open, setOpen] = useState(defaultVisible)
   return (
     <div>
@@ -28,9 +27,6 @@ export const CollapseContent = ({ children, modalItem, extraButtons, defaultVisi
       <div className={`collapse-content-wrapper ${open ? `opened` : ``}`}>
         {children}
       </div>
-      <AntdModal footer={null} width={1000}>
-        {modalItem}
-      </AntdModal>
     </div>
 
   )

@@ -20,9 +20,8 @@ export interface IUploadAntdProps<IModel> extends UploadProps {
     formInstance: FormInstance<IModel>, fieldName: string, folderName: string, maxFileSize?: number
 }
 
-const UpLoadAntd = <IModel,>(props: IUploadAntdProps<IModel>) => {
+const AntdUpLoad = <IModel,>(props: IUploadAntdProps<IModel>) => {
     const { formInstance, fieldName, folderName, maxFileSize, listType, ...rest } = props
-    const {data: modalData} = useAppSelector(state => state.modal)
     const onChange: UploadProps["onChange"] = (info) => {
         console.log(info);
         if (info.file.status !== 'uploading') {
@@ -75,9 +74,9 @@ const UpLoadAntd = <IModel,>(props: IUploadAntdProps<IModel>) => {
 
     const uploadButton = () => {
         const button = <Button icon={<UploadOutlined />}>Chọn tệp</Button>
-        if(modalData){
+        if(formInstance.getFieldValue(fieldName)){
             return (<>
-                {formInstance.getFieldValue(fieldName) ? <img src={formInstance.getFieldValue(fieldName)} alt="ảnh đại diện" style={{ width: '100%' }} /> : button}
+                {<img src={formInstance.getFieldValue(fieldName)} alt="ảnh đại diện" style={{ width: '100%' }} />}
             </>)
         } else {
             return (<>
@@ -104,4 +103,4 @@ const UpLoadAntd = <IModel,>(props: IUploadAntdProps<IModel>) => {
     </Upload>
 
 }
-export { UpLoadAntd }
+export { AntdUpLoad }

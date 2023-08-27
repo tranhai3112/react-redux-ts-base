@@ -2,14 +2,16 @@ import { useState, useRef, ComponentProps } from "react"
 import { Modal } from "antd"
 import { useAppDispatch, useAppSelector } from "../../../redux/Hooks"
 import Draggable, { DraggableEventHandler } from "react-draggable"
-import { hideModal } from "../../../redux/modal/Slice"
-export interface IAntdModalProps extends Omit<ComponentProps<typeof Modal>, "open" | "title">{
+export interface IAntdModalProps extends Omit<ComponentProps<typeof Modal>, "open" | "title" | "onOk" | "onCancel">{
     positionStyle?: React.CSSProperties
+    visible: boolean,
+    title: React.ReactNode,
     handlerOk?: () => void,
+    handlerCancel?: () => void,
 }
 
 export const AntdModal = (props: IAntdModalProps) => {
-    const {children, positionStyle, handlerOk, ...rest} = props
+    const {children, positionStyle, handlerOk, visible, title, handlerCancel, ...rest} = props
     const [disable, setDisable] = useState(false)
     const [bounds, setBounds] = useState({
         left: 0,
@@ -18,8 +20,6 @@ export const AntdModal = (props: IAntdModalProps) => {
         right: 0,
     })
     const dragRef = useRef<HTMLDivElement>(null)
-    const dispatch = useAppDispatch()
-    const {visible, title} = useAppSelector(state => state.modal)
     const onStart : DraggableEventHandler  = (_, uiData) => {
         const { clientWidth, clientHeight } = window?.document?.documentElement;
         const targetRect = dragRef.current?.getBoundingClientRect();
@@ -33,7 +33,7 @@ export const AntdModal = (props: IAntdModalProps) => {
         }
     }
     const onHandlerCancel = () => {
-        dispatch(hideModal())
+        handlerCancel ? handlerCancel() : null
     }
     const onHandlerOk = () => {
         handlerOk ? handlerOk() : null
