@@ -20,10 +20,20 @@ export namespace Service {
         loaidichvus: "loaidichvus",
         tokens: "tokens",
         tinbais: "tinbais",
+        cocautochucs:"cocautochucs",
         "personal/profile": "personal/profile",
     } as const
     export const primaryRoutes = {
-        admin: "/admin/",
+        admin: {
+            root: "/admin/",
+            quanTriNguoiDung: {
+                root: "quan-tri-nguoi-dung",
+                coCauToChuc: "quan-tri-nguoi-dung/co-cau-to-chuc",
+                vaiTro: "quan-tri-nguoi-dung/vai-tro",
+                nguoiDungDonVi: 'quan-tri-nguoi-dung/nguoi-dung-don-vi',
+                taiKhoanTuCSDLDanCu: 'quan-tri-nguoi-dung/tk-csdl-dan-cu',
+            }
+        },
     }
     export type AppEndpoint = keyof typeof apiEndpoints
     export class BaseApi {

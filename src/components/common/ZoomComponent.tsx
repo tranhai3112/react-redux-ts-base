@@ -2,7 +2,7 @@ import { AntdDivider, AntdSpace } from '@/lib/antd/components';
 import { IWithChildren } from '@/types';
 import { FullscreenExitOutlined, FullscreenOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 export interface IZoomComponentProps extends IWithChildren{
     title?: React.ReactNode,
@@ -14,9 +14,21 @@ export const ZoomComponent = (({children, title, onRefresh} : IZoomComponentProp
     const onTogglerZoom = () => {
         setZoomed((curr) => !curr)
     }
-    
+    const escFunction = useCallback((event : KeyboardEvent) => {
+      if (event.key === "Escape") {
+        //Do whatever when esc is pressed
+        setZoomed(false)
+      }
+    }, []);
+  
+    useEffect(() => {
+      document.addEventListener("keydown", escFunction, false);
+  
+      return () => {
+        document.removeEventListener("keydown", escFunction, false);
+      };
+    }, [escFunction]);
   return (<div className={zoomed ? "zoom-in-component" : ""}>
-        {/* render prop component pattern */}
       <>
       <Row align="middle" justify="space-between">
             <Col>

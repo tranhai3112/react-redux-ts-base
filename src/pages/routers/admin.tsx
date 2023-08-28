@@ -6,10 +6,11 @@ import { Service } from '@/services'
 const DichVuLazy = React.lazy(() => import('../../features/dichvu/components/DichVuTable'))
 const LoaiDichVuLazy = React.lazy(() => import('../../features/loaidichvu/components/LoaiDichVuTable'))
 const KenhTinLazy = React.lazy(() => import('../../features/kenhtin/components/KenhTinWrapper'))
+const CoCauToChucLazy = React.lazy(() => import('../../features/cocautochuc/components/CoCauToChucWrapper'))
 const {apiEndpoints, primaryRoutes} = Service
 export const adminRouters: RouteObject[] = [
     {
-        path: primaryRoutes.admin,
+        path: primaryRoutes.admin.root,
         element:
         <Suspense fallback={<div>loading</div>}>
             <RequiredAuth>
@@ -18,15 +19,19 @@ export const adminRouters: RouteObject[] = [
         </Suspense>,
         children: [
             {
-                path: primaryRoutes.admin + apiEndpoints.dichvus,
+                path: primaryRoutes.admin.quanTriNguoiDung.coCauToChuc,
+                element: <CoCauToChucLazy/>
+            },
+            {
+                path: primaryRoutes.admin.root + apiEndpoints.dichvus,
                 element: <DichVuLazy />
             },
             {
-                path: primaryRoutes.admin + apiEndpoints.loaidichvus,
+                path: primaryRoutes.admin.root + apiEndpoints.loaidichvus,
                 element: <LoaiDichVuLazy />
             },
             {
-                path: primaryRoutes.admin + apiEndpoints.kenhtins,
+                path: primaryRoutes.admin.root + apiEndpoints.kenhtins,
                 element: <KenhTinLazy/>
             }
         ]

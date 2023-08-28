@@ -1,5 +1,5 @@
 import { MenuProps } from "antd/es/menu";
-import { AppstoreOutlined, MailOutlined, SettingOutlined, PieChartOutlined, DesktopOutlined, ContainerOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, MailOutlined, SettingOutlined, PieChartOutlined, DesktopOutlined, ContainerOutlined, UserOutlined } from '@ant-design/icons';
 import {Service} from '@/services'
 const {apiEndpoints, primaryRoutes} = Service
 export const HEADER_MENU: MenuProps['items'] = [
@@ -64,11 +64,11 @@ function getItem(
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: 'group',
   title?: string,
+  type?: 'group',
 ): MenuItem {
   return {
-    title,
+    title: title ? title : label,
     key,
     icon,
     children,
@@ -78,16 +78,16 @@ function getItem(
 }
 
 export const SIDER_MENU : MenuProps['items'] = [
-  getItem('Dịch vụ', primaryRoutes.admin + apiEndpoints.dichvus, <PieChartOutlined />),
-  getItem('Loại dịch vụ', primaryRoutes.admin + apiEndpoints.loaidichvus, <DesktopOutlined />),
-  getItem('Kênh tin', primaryRoutes.admin + apiEndpoints.kenhtins, <ContainerOutlined />),
-
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Option 7', '7'),
-    getItem('Option 8', '8'),
+  getItem('Quản trị người dùng', 'quantringuoidung', <UserOutlined />, [
+    getItem('Danh mục người dùng', primaryRoutes.admin.quanTriNguoiDung.coCauToChuc),
+    getItem('Danh mục vai trò', primaryRoutes.admin.quanTriNguoiDung.vaiTro),
+    getItem('Danh mục người dùng đơn vị', primaryRoutes.admin.quanTriNguoiDung.nguoiDungDonVi),
+    getItem('TK từ CSDL dân cư', primaryRoutes.admin.quanTriNguoiDung.taiKhoanTuCSDLDanCu),
   ]),
+  getItem('Dịch vụ', primaryRoutes.admin.root + apiEndpoints.dichvus, <PieChartOutlined />), // primaryRoutes, apiEndpoints sẽ được thay = dữ liệu lấy từ api
+  getItem('Loại dịch vụ', primaryRoutes.admin.root + apiEndpoints.loaidichvus, <DesktopOutlined />),
+  getItem('Kênh tin', primaryRoutes.admin.root + apiEndpoints.kenhtins, <ContainerOutlined />),
+
 
   getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
     getItem('Option 9', '9'),

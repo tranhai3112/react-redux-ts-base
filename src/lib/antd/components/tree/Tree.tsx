@@ -22,4 +22,4 @@ export const AntdTree = <IModel extends IBaseExt>(props: AntdTreeProps<IModel>) 
   )
 }
 
-AntdTree.DirectoryTree = AntdDirectoryTree 
+AntdTree.AntdDirectoryTree = AntdDirectoryTree 

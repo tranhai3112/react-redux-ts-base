@@ -1,4 +1,4 @@
-import { useFolderContext } from "@/features/kenhtin/contexts/FolderContext"
+import { useFolderContext } from "@/contexts/FolderContext"
 import { GetKenhTin } from "@/features/kenhtin/redux/Action"
 import { AntdButton, AntdModal, AntdSelect, AntdSpace, AntdUpLoad } from "@/lib/antd/components"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/Hooks"

@@ -1,7 +1,7 @@
 import { Spliter } from '@/lib/spliter/Spliter'
 import { KenhTin } from './KenhTin'
 import { TinBaiWrapper } from './NoiDung'
-import { FolderContextProvider } from '../contexts/FolderContext'
+import { FolderContextProvider } from '../../../contexts/FolderContext'
 
 const KenhTinWrapper = () => {
     return (
@@ -13,7 +13,7 @@ const KenhTinWrapper = () => {
                 primaryMinSize={25}
                 secondaryMinSize={15}
                 secondaryInitialSize={20}>
-                <KenhTin />
+                <section style={{marginRight:12}}><KenhTin /></section>
                 <TinBaiWrapper />
             </Spliter>
         </FolderContextProvider>

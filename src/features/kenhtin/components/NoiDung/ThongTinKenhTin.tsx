@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/lib/redux/Hooks'
 import React, { useEffect, useState } from 'react'
-import { useFolderContext } from '../../contexts/FolderContext'
+import { useFolderContext } from '../../../../contexts/FolderContext'
 import { GetKenhTin } from '../../redux/Action'
 
 export const ThongTinKenhTin = () => {
@@ -13,6 +13,6 @@ export const ThongTinKenhTin = () => {
       }
     }, [folderContext.folderId])
   return (
-    <div>{JSON.stringify(kenhTin)}</div>
+    <div className='w-100'>{JSON.stringify(kenhTin)}</div>
   )
 }

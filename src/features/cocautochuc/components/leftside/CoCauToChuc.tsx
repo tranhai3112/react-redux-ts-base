@@ -1,30 +1,30 @@
 import { ZoomComponent } from "@/components/common"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/Hooks"
-import { SearchKenhTin } from "../../redux/Action"
+import { SearchCoCauToChuc } from "../../redux/crud"
 import { useEffect, useState } from "react"
-import { ISearchKenhTin } from "../../models"
+import { ISearchCoCauToChuc } from "../../models"
 import { PlusCircleOutlined } from "@ant-design/icons"
 import { AntdDivider, AntdSpace, AntdTree } from "@/lib/antd/components"
 import { useFolderContext } from "../../../../contexts/FolderContext"
-import { ThemKenhTin } from "./modals/ThemKenhTin"
+import { ThemCoCauToChuc } from "../modals"
 import { Input } from "antd"
 import { SearchProps } from "antd/es/input"
-import { KenhTinContextMenu } from "./KenhTinContextMenu"
+import { CoCauToChucContextMenu } from "../CoCauToChucContextMenu"
 
 const {Search} = Input
 const {AntdDirectoryTree} = AntdTree
 
-export const KenhTin = () => {
-  const {datas: kenhTins} = useAppSelector(state => state.kenhtin)
-  const [searchParams, setSearchParams] = useState<ISearchKenhTin>({reFetch:true})
+export const CoCauToChuc = () => {
+  const {datas: coCauToChucs} = useAppSelector(state => state.cocautochuc)
+  const [searchParams, setSearchParams] = useState<ISearchCoCauToChuc>({reFetch:true})
   const folderContext = useFolderContext()
   const [folderSearchParams, setFolderSearchParams] = useState("")
   const [delayFolderSearch, setDelayFolderSearch] = useState("")
-  const [themKenhTinModalVisible, setThemKenhTinModalVisible] = useState(false)
+  const [themCoCauToChucModalVisible, setThemCoCauToChucModalVisible] = useState(false)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(SearchKenhTin(searchParams))
+    dispatch(SearchCoCauToChuc(searchParams))
   }, [searchParams])
 
   useEffect(() => {
@@ -42,22 +42,22 @@ export const KenhTin = () => {
   return <ZoomComponent title={"Danh sách kênh tin"} onRefresh={() => setSearchParams((curr) => ({ ...curr, reFetch: true }))}>
   <Search style={{ marginBottom: 8 }} placeholder="Tìm kiếm thư mục" onChange={onChangeFolder} onSearch={onSearchFolder} />
   <AntdDivider />
-  <AntdSpace onClick={() => setThemKenhTinModalVisible(true)} style={{cursor: "pointer"}}>
+  <AntdSpace onClick={() => setThemCoCauToChucModalVisible(true)} style={{cursor: "pointer"}}>
       <PlusCircleOutlined style={{fontSize: "18px"}} />
       Thêm thư mục gốc
   </AntdSpace>
   <AntdDivider />
   <AntdDirectoryTree 
     multiple={false}
-    generateTree={{data: kenhTins, title: "tenKenhTin", parentId: "maKenhTinCha"}} 
+    generateTree={{data: coCauToChucs, title: "groupName", parentId: "ofGroupCode"}} 
     searchParams={folderSearchParams}
     onSelect={(value) => folderContext.setFolderId((value as string[])[0])}
     contextMenu={(setVisible, id, top, left) => {
-      return <KenhTinContextMenu id={id} top={top} left={left} setVisible={setVisible}/>
+      return <CoCauToChucContextMenu id={id} top={top} left={left} setVisible={setVisible}/>
     }}
   />
   {/* modals */}
-  <ThemKenhTin visible={themKenhTinModalVisible} handlerClose={() => setThemKenhTinModalVisible(false)}/>
+  <ThemCoCauToChuc visible={themCoCauToChucModalVisible} handlerClose={() => setThemCoCauToChucModalVisible(false)}/>
   {/* modals */}
 </ZoomComponent>
 }

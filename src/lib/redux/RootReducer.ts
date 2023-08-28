@@ -6,6 +6,7 @@ import loaiDichVuReducer from '../../features/loaidichvu/redux/slice'
 import kenhTinReducer from '../../features/kenhtin/redux/Slice'
 import tinBaiReducer from '../../features/tinbai/redux/slice'
 import kieuNoiDungReducer from '../../features/kieunoidung/redux/slice'
+import coCauToChucReducer from '../../features/cocautochuc/redux/slice'
 
 export const rootReducer = combineReducers({
     user: userReducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
     kenhtin: kenhTinReducer,
     tinbai: tinBaiReducer,
     kieunoidung: kieuNoiDungReducer,
+    cocautochuc:coCauToChucReducer,
 })

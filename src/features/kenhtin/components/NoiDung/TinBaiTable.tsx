@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useFolderContext } from '../../contexts/FolderContext'
+import { useFolderContext } from '../../../../contexts/FolderContext'
 import { useAppDispatch, useAppSelector } from '@/lib/redux/Hooks'
 import { SearchTinBai } from '@/features/tinbai/redux/action'
 import { useColumn } from '@/features/tinbai/hooks/useColumn'

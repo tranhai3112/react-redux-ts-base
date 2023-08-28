@@ -2,8 +2,7 @@ import { IBaseExt } from "@/models"
 import { Tree } from "antd"
 import { DataNode, DirectoryTreeProps } from "antd/es/tree"
 import { useTreeData } from "./hooks/useTreeData"
-import { useEffect, useMemo, useState } from "react"
-import { getParentKey } from "./ultis/renderTree"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 export interface AntdDirectoryTreeProps<IModel> extends DirectoryTreeProps {
     generateTree?: {
@@ -11,13 +10,18 @@ export interface AntdDirectoryTreeProps<IModel> extends DirectoryTreeProps {
         title: keyof IModel,
         parentId: keyof IModel,
     },
-    searchParams: string
+    searchParams: string,
+    contextMenu?: (setVisible: React.Dispatch<React.SetStateAction<boolean>>, id: string, top?: number, left?: number) => React.ReactNode,
 }
 const { DirectoryTree } = Tree
 
+
+
 export const AntdDirectoryTree = <IModel extends IBaseExt>(props: AntdDirectoryTreeProps<IModel>) => {
-    const { generateTree, searchParams, ...rest } = props
+    const { generateTree, searchParams, contextMenu, ...rest } = props
     const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+    const [showContext, setShowContext] = useState(false)
+    const [contextData, setContextData] = useState<{top: number, left: number, id: string}>()
     const [autoExpandParent, setAutoExpandParent] = useState(true);
     const treeData = useTreeData({ generateTree })
     const onExpand = (newExpandedKeys: React.Key[]) => {
@@ -64,7 +68,16 @@ export const AntdDirectoryTree = <IModel extends IBaseExt>(props: AntdDirectoryT
         setExpandedKeys(expandedKeyFilters)
         setAutoExpandParent(true)
       },[expandedKeyFilters])
+      const onRightClick: DirectoryTreeProps["onRightClick"] = ({event, node}) => {
+        const {pageX, pageY} = event
+        setContextData({top: pageY, left: pageX, id: node.key as string})
+        setShowContext(true)
+      }
+      
     return (
-        <DirectoryTree showLine {...rest} treeData={treeDataFiltered} expandedKeys={expandedKeys} onExpand={onExpand} autoExpandParent={autoExpandParent}/>
+      <>
+        <DirectoryTree showLine {...rest} treeData={treeDataFiltered} expandedKeys={expandedKeys} onExpand={onExpand} autoExpandParent={autoExpandParent} onRightClick={onRightClick}/>
+        {showContext && contextData ? contextMenu && contextMenu(setShowContext, contextData.id, contextData.top, contextData.left) : null}
+      </>
     )
 }
