@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { Layout, Menu, theme, Button } from 'antd'
 import { HEADER_MENU, SIDER_MENU, SIDER_MENU_WIDTH } from '../../../../data'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AntdBreadCrumb } from '../breadcrumb/BreadCrumb'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { MenuProps } from "antd/es/menu"
+import { Service } from '@/services'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -32,10 +33,13 @@ export const AntdLayout = ({children, headerFixed = true, siderFixed = true, sid
     }, 0)
   }, [collapsed])
 
-
+  const openMenu = useMemo(() => {
+      return location.pathname.split("/").length>1 ? [location.pathname.slice(0, location.pathname.lastIndexOf("/"))] : undefined
+  }, [location.pathname])
+  
   return (
     <Layout className='main-layout'>
-      <Sider ref={siderRef} width={siderWidth} trigger={null} collapsible collapsed={collapsed} onCollapse={setCollapsed} 
+      <Sider ref={siderRef} width={siderWidth} trigger={null} collapsible collapsed={collapsed} onCollapse={setCollapsed}
       className={siderFixed ? `layout-sider-fixed` : ''}>
         <div style={{ height: 32, margin: 16, background: 'gray', borderRadius: 6 }}>
         </div>
@@ -43,7 +47,8 @@ export const AntdLayout = ({children, headerFixed = true, siderFixed = true, sid
         <Menu
           mode="inline"
           theme={menuTheme}
-          defaultSelectedKeys={[location.pathname]}
+          defaultOpenKeys={openMenu}
+          selectedKeys={[location.pathname]}
           style={{ height: '100%', borderRight: 0 }}
           onClick={(e) => navigate(e.key)}
           items={SIDER_MENU}

@@ -1,30 +1,29 @@
-import axios from "axios";
 import { Service } from "../../../services/base";
 import { AxiosResponseWrapper } from "../../../lib/axios/typeHelper";
-import {IBaseExt, ICredential, ILogin, IOmitUpdate, IPickSearch, IUser } from "../../../models";
+import {IBaseExt, ICredential, ILogin, IOmitUpdate, IPaginationResponse, IPickSearch, IResult, ISoftDelete } from "../../../models";
+import { IUser } from "../models";
 class UserService extends Service.BaseApi implements Service.ICrud<IUser>{
     constructor() {
         super("auth/profile")
     }
-    Search(_params: IPickSearch<IUser>): AxiosResponseWrapper<IUser[]> {
-        throw new Error("Method not implemented.");
+    Search(params: IPickSearch<IUser>): AxiosResponseWrapper<IPaginationResponse<IUser[]>> {
+        return this._axios.get(this._urlSuffix, {params})
     }
-    Get(_id: string): AxiosResponseWrapper<IUser> {
-        throw new Error("Method not implemented.");
+    Get(id: string): AxiosResponseWrapper<IResult<IUser>> {
+        return this._axios.get(this._urlSuffix + "/" + id)
     }
-    Create(_data: Partial<Omit<IUser, keyof IBaseExt<string>>>): AxiosResponseWrapper {
-        throw new Error("Method not implemented.");
+    Create(data: Partial<Omit<IUser, keyof IBaseExt<string>>>): AxiosResponseWrapper {
+        return this._axios.post(this._urlSuffix, data)
     }
-    Delete(_id: string): AxiosResponseWrapper {
-        throw new Error("Method not implemented.");
+    Delete(id: ISoftDelete): AxiosResponseWrapper {
+        return this._axios.delete(this._urlSuffix + "/" + id)
     }
-    Restore(_id: string): AxiosResponseWrapper {
-        throw new Error("Method not implemented.");
+    Restore(id: string): AxiosResponseWrapper {
+        return this._axios.patch(this._urlSuffix + "/" + id)
     }
-    Update(_params: IOmitUpdate<IUser>): AxiosResponseWrapper {
-        throw new Error("Method not implemented.");
+    Update(params: IOmitUpdate<IUser>): AxiosResponseWrapper {
+        return this._axios.put(this._urlSuffix + "/" + params.id, params.data)
     }
-   
     GetUser(data: Pick<ICredential, "access_token">): AxiosResponseWrapper<IUser> {
         return this._axios.get(this._urlSuffix, {headers:{
             Authorization: `Bearer ${data.access_token}`

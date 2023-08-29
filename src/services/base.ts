@@ -1,4 +1,4 @@
-import { IBaseExt, IPaginationResponse, IOmitCreate, IOmitUpdate, IPickSearch, ICredential, IUser, IBasePagination, IResult, ISoftDelete } from "../models"
+import { IBaseExt, IPaginationResponse, IOmitCreate, IOmitUpdate, IPickSearch, ICredential, IBasePagination, IResult, ISoftDelete } from "../models"
 import {AxiosResponseWrapper} from '../lib/axios/typeHelper'
 import { API_VERSION } from "../data/constant";
 import axiosInstance from "../lib/axios";
@@ -21,17 +21,18 @@ export namespace Service {
         tokens: "tokens",
         tinbais: "tinbais",
         cocautochucs:"cocautochucs",
+        "auth/profile":"auth/profile",
         "personal/profile": "personal/profile",
     } as const
     export const primaryRoutes = {
         admin: {
             root: "/admin/",
             quanTriNguoiDung: {
-                root: "quan-tri-nguoi-dung",
-                coCauToChuc: "quan-tri-nguoi-dung/co-cau-to-chuc",
-                vaiTro: "quan-tri-nguoi-dung/vai-tro",
-                nguoiDungDonVi: 'quan-tri-nguoi-dung/nguoi-dung-don-vi',
-                taiKhoanTuCSDLDanCu: 'quan-tri-nguoi-dung/tk-csdl-dan-cu',
+                root: "/admin/quan-tri-nguoi-dung",
+                coCauToChuc: "/admin/quan-tri-nguoi-dung/co-cau-to-chuc",
+                vaiTro: "/admin/quan-tri-nguoi-dung/vai-tro",
+                nguoiDungDonVi: '/admin/quan-tri-nguoi-dung/nguoi-dung-don-vi',
+                taiKhoanTuCSDLDanCu: '/admin/quan-tri-nguoi-dung/tk-csdl-dan-cu',
             }
         },
     }

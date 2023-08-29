@@ -1,9 +1,5 @@
-import {Provider} from 'react-redux'
-import { persistor, store } from './lib/redux/Store.ts'
 import {useRoutes} from 'react-router-dom'
 import { adminRouters } from './pages/routers/admin.tsx'
-import { PersistGate } from 'redux-persist/integration/react'
-
 function App() {
   const adminRoutes = useRoutes(adminRouters)
   return (

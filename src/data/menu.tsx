@@ -78,7 +78,7 @@ function getItem(
 }
 
 export const SIDER_MENU : MenuProps['items'] = [
-  getItem('Quản trị người dùng', 'quantringuoidung', <UserOutlined />, [
+  getItem('Quản trị người dùng', primaryRoutes.admin.quanTriNguoiDung.root, <UserOutlined />, [
     getItem('Danh mục người dùng', primaryRoutes.admin.quanTriNguoiDung.coCauToChuc),
     getItem('Danh mục vai trò', primaryRoutes.admin.quanTriNguoiDung.vaiTro),
     getItem('Danh mục người dùng đơn vị', primaryRoutes.admin.quanTriNguoiDung.nguoiDungDonVi),
@@ -87,12 +87,4 @@ export const SIDER_MENU : MenuProps['items'] = [
   getItem('Dịch vụ', primaryRoutes.admin.root + apiEndpoints.dichvus, <PieChartOutlined />), // primaryRoutes, apiEndpoints sẽ được thay = dữ liệu lấy từ api
   getItem('Loại dịch vụ', primaryRoutes.admin.root + apiEndpoints.loaidichvus, <DesktopOutlined />),
   getItem('Kênh tin', primaryRoutes.admin.root + apiEndpoints.kenhtins, <ContainerOutlined />),
-
-
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-
-    getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
-  ]),
 ]

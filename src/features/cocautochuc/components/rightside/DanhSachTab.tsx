@@ -1,19 +1,22 @@
 import { AntdTab, IAntdTabsProps } from '@/lib/antd/components'
 import { DanhSachNguoiDung } from './DanhSachNguoiDung'
+import { ZoomComponent } from '@/components/common'
 const TINBAI_TABS : IAntdTabsProps["items"] = [{
+  label: "Người dùng",
+  key:"nguoi-dung",
+  children: <DanhSachNguoiDung/>
+}, {
+  label: "Phân quyền",
+  key:"phan-quyen",
+  children: <></>
+}, {
   label: "Thông tin",
   key:"thong-tin",
-  children: <DanhSachNguoiDung/>
-}, {
-  label: "Danh sách tin bài",
-  key:"danh-sach-tin-bai",
-  children: <DanhSachNguoiDung/>
-}, {
-  label: "Test formio builder",
-  key:"test-formio-build",
-  children: <DanhSachNguoiDung/>
+  children: <></>
 }]
 
 export const DanhSachTab = () => {
-    return <AntdTab size='small' style={{ marginBottom: 32 }} type="card" items={TINBAI_TABS} />
+    return <ZoomComponent onRefresh={() => {}}>
+      <AntdTab size='small' style={{ marginBottom: 32 }} type="card" items={TINBAI_TABS} />
+    </ZoomComponent>
 }
