@@ -9,7 +9,7 @@ export const listToTree = <IModel extends IBaseExt & {children?: IBaseExt[], key
     let node: IModel
     let roots: TreeProps["treeData"]= []
     for (let i = 0; i < list.length; i += 1) {
-        map[list[i].id] = i; 
+        map[list[i][id] as any] = i; 
         list[i].children = []; 
     }
     for (let i = 0; i < list.length; i += 1) {
@@ -21,6 +21,8 @@ export const listToTree = <IModel extends IBaseExt & {children?: IBaseExt[], key
             roots.push({ key: node[id], title: node[title] , children: children } as any);
         }
     }
+    if(list.length && !roots.length)
+      return list as any;
     return roots;
 }
 

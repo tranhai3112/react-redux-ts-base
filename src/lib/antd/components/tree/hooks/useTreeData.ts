@@ -7,8 +7,8 @@ import { listToTree } from '../ultis/renderTree'
 export const useTreeData = <IModel extends IBaseExt>({generateTree} : {generateTree: AntdTreeProps<IModel>["generateTree"]}) => {
   const treeData = useMemo(() => {
     if(generateTree && generateTree.data){
-        const {data, title, parentId} = generateTree
-        return listToTree(data, title, parentId)
+        const {data, title, parentId, id} = generateTree
+        return listToTree(data, title, parentId, id)
     }
     return undefined
 }, [generateTree?.data])

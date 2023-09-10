@@ -5,7 +5,7 @@ const FolderContext = createContext<IFolderContext | null>(null)
 
 export interface IFolderContext{
     folderId: string | undefined;
-    setFolderId: React.Dispatch<React.SetStateAction<string | undefined>> ;
+    setFolderId: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 export const useFolderContext = () => {

@@ -2,6 +2,7 @@ import createGenericSlice, { ExtendedState } from "../../../lib/redux/GenericSli
 import { ILoaiDichVu } from "../models";
 import { AddLoaiDichVu, DeleteLoaiDichVu, GetLoaiDichVu, SearchLoaiDichVu, UpdateLoaiDichVu } from "./action";
 import {toast} from 'react-toastify'
+import { isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 
 export interface ILoaiDichVuState extends ExtendedState<ILoaiDichVu>{
 
@@ -17,20 +18,10 @@ const Slice = createGenericSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(SearchLoaiDichVu.pending, (state) => {
-                state.loading = true
-            })
             .addCase(SearchLoaiDichVu.fulfilled, (state, action) => {
                 state.loading = false
                 state.datas = action.payload.data
                 state.count = action.payload.totalCount
-            })
-            .addCase(SearchLoaiDichVu.rejected, (state, action) => {
-                state.loading = false
-                state.error = action.error.message
-            })
-            .addCase(GetLoaiDichVu.pending, (state) => {
-                state.loading = true
             })
             .addCase(GetLoaiDichVu.fulfilled, (state, action) => {
                 state.loading = false
@@ -39,20 +30,18 @@ const Slice = createGenericSlice({
             .addCase(AddLoaiDichVu.fulfilled, () => {
                 toast.success("Thêm thành công")
             })
-            .addCase(AddLoaiDichVu.rejected, (_, action) => {
-                toast.error(action.error.message)
-            })
             .addCase(UpdateLoaiDichVu.fulfilled, () => {
                 toast.success("Cập nhật thành công")
-            })
-            .addCase(UpdateLoaiDichVu.rejected, (_, action) => {
-                toast.error(action.error.message)
             })
             .addCase(DeleteLoaiDichVu.fulfilled, () => {
                 toast.success("Xóa tạm thời thành công")
             })
-            .addCase(DeleteLoaiDichVu.rejected, (_, action) => {
+            .addMatcher(isPending(SearchLoaiDichVu, GetLoaiDichVu, AddLoaiDichVu, UpdateLoaiDichVu, DeleteLoaiDichVu), (state) => {
+                state.loading = true
+            })
+            .addMatcher(isRejectedWithValue(SearchLoaiDichVu, GetLoaiDichVu, AddLoaiDichVu, UpdateLoaiDichVu, DeleteLoaiDichVu), (state, action) => {
                 toast.error(action.error.message)
+                state.loading = false
             })
     }
 })

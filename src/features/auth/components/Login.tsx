@@ -11,12 +11,12 @@ export const Login = () => {
     }
   return (
     <div>
-        <Form form={form} name='login' onFinish={onFinish} initialValues={{email: "", password: ""}}>
-            <Form.Item name="email" label={"email"}>
+        <Form form={form} name='login' onFinish={onFinish} initialValues={{userName: "", password: ""}}>
+        <Form.Item name="userName" label={"Tài khoản"} hasFeedback rules={[{ required: true, message: 'Vui lòng nhập tài khoản' }]}>
                 <Input></Input>
             </Form.Item>
-            <Form.Item name="password" label={"password"}>
-                <Input></Input>
+            <Form.Item name="password" label={"Mật khẩu"} hasFeedback rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                <Input.Password></Input.Password>
             </Form.Item>
             <Form.Item>
                 <Button htmlType="submit">

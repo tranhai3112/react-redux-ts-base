@@ -8,7 +8,7 @@ export interface AntdTreeProps<IModel> extends TreeProps {
         data: IModel[] | undefined,
         title: keyof IModel,
         parentId: keyof IModel,
-
+        id?: keyof IModel,
     }
 }
 
@@ -22,4 +22,4 @@ export const AntdTree = <IModel extends IBaseExt>(props: AntdTreeProps<IModel>) 
   )
 }
 
-AntdTree.DirectoryTree = AntdDirectoryTree 
+AntdTree.AntdDirectoryTree = AntdDirectoryTree 

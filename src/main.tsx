@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-splitter-layout/lib/index.css';
 import "formiojs/dist/formio.full.css";
 import "bootstrap/dist/css/bootstrap.min.css"
+import 'reactflow/dist/style.css';
 import { RouterProvider } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import { router } from './pages/routers/admin.tsx';

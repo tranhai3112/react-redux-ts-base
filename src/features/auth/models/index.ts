@@ -1,12 +1,9 @@
 import { IBaseExt} from "../../../models/basemodel";
-export interface IUser extends IBaseExt{
-    name: string,
-    age: number
-}
 
 export interface ICredential {
-    access_token: string,
-    refresh_token: string
+    refreshToken: string,
+    refreshTokenExpiryTime: string,
+    token: string,
 }
 
 export interface ILogin {

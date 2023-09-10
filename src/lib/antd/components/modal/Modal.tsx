@@ -5,13 +5,15 @@ import Draggable, { DraggableEventHandler } from "react-draggable"
 export interface IAntdModalProps extends Omit<ComponentProps<typeof Modal>, "open" | "title" | "onOk" | "onCancel">{
     positionStyle?: React.CSSProperties
     visible: boolean,
+    fullsize?: boolean,
+    fullsizeScrollable?:boolean
     title: React.ReactNode,
     handlerOk?: () => void,
     handlerCancel?: () => void,
 }
 
 export const AntdModal = (props: IAntdModalProps) => {
-    const {children, positionStyle, handlerOk, visible, title, handlerCancel, ...rest} = props
+    const {children, positionStyle, handlerOk, visible, fullsize, fullsizeScrollable, title, handlerCancel, ...rest} = props
     const [disable, setDisable] = useState(false)
     const [bounds, setBounds] = useState({
         left: 0,
@@ -41,16 +43,16 @@ export const AntdModal = (props: IAntdModalProps) => {
     return <Modal 
         open={visible}
         maskClosable={true}
-        wrapClassName="modal-wrapper"
-        style={{...positionStyle}}
-        title={<div style={{width:'100%', cursor:"move"}} onMouseOver={() => disable ? setDisable(false) : null} onMouseOut={() => setDisable(true)}>
+        wrapClassName={`modal-wrapper ${fullsize ? "fullsize" : ""} ${fullsizeScrollable ? "fullsizescrollable" : ""}`}
+        style={{...positionStyle, }}
+        title={<div style={{width:'100%', cursor:fullsize ? "default" : "move"}} onMouseOver={() => disable ? setDisable(false) : null} onMouseOut={() => setDisable(true)}>
             {title}
         </div>}
         onCancel={onHandlerCancel}
         onOk={onHandlerOk}
         modalRender={(modal) => (
             <Draggable 
-                disabled={disable}
+                disabled={fullsize || disable}
                 bounds={bounds}
                 onStart={(event, uiData) => onStart(event, uiData)}
                 nodeRef={dragRef}

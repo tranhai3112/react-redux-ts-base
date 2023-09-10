@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 import createGenericSlice, { GenericState, ExtendedState } from "../../../lib/redux/GenericSlice";
-import { ICredential, IUser } from "../../../models";
+import { ICredential } from "../../../models";
 import { GetUser } from "./Actions";
+import { IUser } from "../models";
 
 export interface IAuthState extends ExtendedState<IUser>{
 }

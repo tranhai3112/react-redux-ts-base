@@ -1,4 +1,4 @@
-import { IBaseExt, IPaginationResponse, IOmitCreate, IOmitUpdate, IPickSearch, ICredential, IUser, IBasePagination, IResult, ISoftDelete } from "../models"
+import { IBaseExt, IPaginationResponse, IOmitCreate, IOmitUpdate, IPickSearch, ICredential, IBasePagination, IResult, ISoftDelete } from "../models"
 import {AxiosResponseWrapper} from '../lib/axios/typeHelper'
 import { API_VERSION } from "../data/constant";
 import axiosInstance from "../lib/axios";
@@ -18,6 +18,7 @@ export namespace Service {
         dichvus: "dichvus",
         kenhtins: "kenhtins",
         loaidichvus: "loaidichvus",
+        cocautochucs: "cocautochucs",
         tokens: "tokens",
         tinbais: "tinbais",
         "personal/profile": "personal/profile",

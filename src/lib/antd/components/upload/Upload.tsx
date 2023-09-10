@@ -1,10 +1,8 @@
-import { Button, Form, message, Upload } from 'antd';
-import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, message, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import type { FormInstance } from 'antd';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { useAppSelector } from '@/lib/redux/Hooks';
+import type { RcFile, UploadProps } from 'antd/es/upload/interface';
+import { useCallback, useEffect } from 'react';
 import axiosInstance, { getToken } from '@/lib/axios';
 import { IResult } from '@/models';
 import { API_VERSION, HOST_PATH } from '@/data';
@@ -55,7 +53,7 @@ const AntdUpLoad = <IModel,>(props: IUploadAntdProps<IModel>) => {
     }, [])
 
     const onRemove: UploadProps["onRemove"] = async (file) => {
-        const res = await axiosInstance.post<IResult<null>>(HOST_PATH + API_VERSION + 'cauhinhs/removefile', {
+        const res = await axiosInstance.post<IResult<null>>(HOST_PATH + API_VERSION + 'files/removefile', {
             Path: file.response.data
         })
         if(res.status === 200){
@@ -74,13 +72,15 @@ const AntdUpLoad = <IModel,>(props: IUploadAntdProps<IModel>) => {
 
     const uploadButton = () => {
         const button = <Button icon={<UploadOutlined />}>Chọn tệp</Button>
+        
         if(formInstance.getFieldValue(fieldName)){
             return (<>
-                {<img src={formInstance.getFieldValue(fieldName)} alt="ảnh đại diện" style={{ width: '100%' }} />}
+                {listType !== 'text' ? <img src={formInstance.getFieldValue(fieldName)} alt="ảnh đại diện" style={{ width: '100%' }} /> : <></>}
             </>)
         } else {
             return (<>
-                {formInstance.getFieldValue(fieldName)?.fileList?.length == 0 || formInstance.getFieldValue(fieldName) === undefined ? button : null}
+                {/* {formInstance.getFieldValue(fieldName)?.fileList?.length == 0 || formInstance.getFieldValue(fieldName) ? button : null} */}
+                {button}
             </>)
         }
     }
@@ -89,7 +89,7 @@ const AntdUpLoad = <IModel,>(props: IUploadAntdProps<IModel>) => {
         data={{ FolderName: folderName }}
         showUploadList={{showRemoveIcon:true}}
         beforeUpload={beforeUpload}
-        maxCount={1} action={HOST_PATH + API_VERSION + 'cauhinhs/uploadfile'}  headers={{
+        maxCount={1} action={HOST_PATH + API_VERSION + 'files/uploadfile'}  headers={{
             Authorization: `Bearer ${getToken()}`
         }}
         listType={listType}

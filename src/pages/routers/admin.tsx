@@ -5,7 +5,7 @@ import { MasterLayout } from '../../components/layout'
 import { Service } from '@/services'
 const DichVuLazy = React.lazy(() => import('../../features/dichvu/components/DichVuTable'))
 const LoaiDichVuLazy = React.lazy(() => import('../../features/loaidichvu/components/LoaiDichVuTable'))
-const KenhTinLazy = React.lazy(() => import('../../features/kenhtin/components/KenhTinWrapper'))
+const CoCauToChucLazy = React.lazy(() => import('../../features/cocautochuc/components/CoCauToChucWrapper'))
 const {apiEndpoints, primaryRoutes} = Service
 export const adminRouters: RouteObject[] = [
     {
@@ -26,9 +26,9 @@ export const adminRouters: RouteObject[] = [
                 element: <LoaiDichVuLazy />
             },
             {
-                path: primaryRoutes.admin + apiEndpoints.kenhtins,
-                element: <KenhTinLazy/>
-            }
+                path: primaryRoutes.admin + apiEndpoints.cocautochucs,
+                element: <CoCauToChucLazy />
+            },
         ]
     },
     {

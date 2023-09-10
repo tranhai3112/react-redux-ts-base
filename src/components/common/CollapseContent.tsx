@@ -13,7 +13,7 @@ export const CollapseContent = ({ children, extraButtons, defaultVisible}: IColl
   const [open, setOpen] = useState(defaultVisible)
   return (
     <div>
-      <Row className='d-flex justify-content-center' justify="end" gutter={[16,16]}>
+      <Row className='d-flex' justify="end" gutter={[16,16]}>
         <Col>
           <AntdButton onClick={() => setOpen(curr => !curr)}>Tìm kiếm</AntdButton>
         </Col>

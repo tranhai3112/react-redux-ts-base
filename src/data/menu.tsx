@@ -80,7 +80,7 @@ function getItem(
 export const SIDER_MENU : MenuProps['items'] = [
   getItem('Dịch vụ', primaryRoutes.admin + apiEndpoints.dichvus, <PieChartOutlined />),
   getItem('Loại dịch vụ', primaryRoutes.admin + apiEndpoints.loaidichvus, <DesktopOutlined />),
-  getItem('Kênh tin', primaryRoutes.admin + apiEndpoints.kenhtins, <ContainerOutlined />),
+  getItem('Cơ cấu tổ chức', primaryRoutes.admin + apiEndpoints.cocautochucs, <ContainerOutlined />),
 
   getItem('Navigation One', 'sub1', <MailOutlined />, [
     getItem('Option 5', '5'),
