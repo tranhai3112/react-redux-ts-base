@@ -15,3 +15,13 @@ export const GetToken = createAsyncThunk
         return thunkApi.rejectWithValue(error as IError)
     }
 })
+
+export const RefreshToken = createAsyncThunk
+<ICredential, Omit<ICredential, "refreshTokenExpiryTime">, {rejectValue: IError}>("RefreshToken", async (params, thunkApi) => {
+    try {
+        const res = await authService.RefreshToken(params)
+        return res.data;
+    } catch (error) {
+        return thunkApi.rejectWithValue(error as IError)
+    }
+})

@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import createGenericSlice, { GenericState, ExtendedState } from "../../../lib/redux/GenericSlice";
 import { ICredential, IUser } from "../../../models";
-import { GetToken } from "./Actions";
+import { GetToken, RefreshToken } from "./Actions";
 
 export interface IAuthState extends ExtendedState<ICredential>{
 }
@@ -27,6 +27,9 @@ const Slice = createGenericSlice({
         .addCase(GetToken.rejected, (state, action) => {
             state.error = action.payload?.message
             state.loading = false
+        })
+        .addCase(RefreshToken.fulfilled, (state, action) => {
+            state.data = action.payload
         })
         // .addCase(GetUser.pending, (state) => {
         //     state.loading = true
