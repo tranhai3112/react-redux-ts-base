@@ -1,7 +1,6 @@
 import { IBaseExt, IPaginationResponse, IOmitCreate, IOmitUpdate, IPickSearch, ICredential, IBasePagination, IResult, ISoftDelete } from "../models"
 import {AxiosResponseWrapper} from '../lib/axios/typeHelper'
 import { API_VERSION } from "../data/constant";
-import axiosInstance from "../lib/axios";
 export namespace Service {
     export type IUpdateService<TObj> = IOmitUpdate<TObj> & {id : string}
     // weakly typed
@@ -29,7 +28,6 @@ export namespace Service {
     export type AppEndpoint = keyof typeof apiEndpoints
     export class BaseApi {
         public readonly _urlSuffix : string 
-        public readonly _axios = axiosInstance
         constructor(endpoint: AppEndpoint, apiVersion: string = API_VERSION) {
             this._urlSuffix = apiVersion + endpoint
         }
